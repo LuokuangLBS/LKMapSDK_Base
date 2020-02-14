@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LKMapSDK_Base'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of LKMapSDK_Base.'
+  s.version          = '1.0.0'
+  s.summary          = '箩筐地图iOS SDK（CocoaPods箩筐地图官方库），基础功能包'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,25 +18,14 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+箩筐地图iOS SDK（CocoaPods箩筐地图官方库），基础功能包
                        DESC
 
   s.homepage         = 'https://github.com/haofp@luokung.com/LKMapSDK_Base'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'haofp@luokung.com' => 'haofp@luokung.com' }
-  s.source           = { :git => 'https://github.com/haofp@luokung.com/LKMapSDK_Base.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.ios.deployment_target = '8.0'
-
-  s.source_files = 'LKMapSDK_Base/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'LKMapSDK_Base' => ['LKMapSDK_Base/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.source           = { :git => 'https://github.com/LuokuangLBS/LKMapSDK_Base.git', :tag => s.version.to_s }
+  s.ios.deployment_target = '9.0'
+  s.frameworks = 'UIKit'
+  s.vendored_frameworks = 'LKMapSDK_Base/*.{framework}'
 end
