@@ -18,14 +18,15 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-箩筐地图iOS SDK（CocoaPods箩筐地图官方库），基础功能包
+箩筐地图iOS SDK（CocoaPods箩筐地图官方库），基础功能包。提供基础功能。
                        DESC
 
-  s.homepage         = 'https://github.com/haofp@luokung.com/LKMapSDK_Base'
+  s.homepage         = 'https://lbs.luokuang.com'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'haofp@luokung.com' => 'haofp@luokung.com' }
+  s.author           = { 'LuokuangLBS' => 'haofp@luokung.com' }
   s.source           = { :git => 'https://github.com/LuokuangLBS/LKMapSDK_Base.git', :tag => s.version.to_s }
   s.ios.deployment_target = '9.0'
+  s.requires_arc = true
   s.frameworks = 'UIKit'
   s.vendored_frameworks = 'LKMapSDK_Base/*.{framework}'
 end
