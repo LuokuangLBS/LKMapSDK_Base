@@ -27,6 +27,6 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/LuokuangLBS/LKMapSDK_Base.git', :tag => s.version.to_s }
   s.ios.deployment_target = '9.0'
   s.requires_arc = true
-  s.frameworks = 'UIKit'
+  s.frameworks = 'UIKit', 'CoreLocation'
   s.vendored_frameworks = 'LKMapSDK_Base/*.{framework}'
 end
