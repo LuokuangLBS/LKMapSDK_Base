@@ -29,4 +29,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.frameworks = 'UIKit', 'CoreLocation'
   s.vendored_frameworks = 'LKMapSDK_Base/*.{framework}'
+  s.libraries = 'c++'
 end
