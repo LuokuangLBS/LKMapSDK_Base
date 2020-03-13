@@ -1,6 +1,0 @@
-framework module LKMapSDK_Base {
-  umbrella header "LKMapSDK_Base.h"
-
-  export *
-  module * { export * }
-}
