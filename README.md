@@ -5,8 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/LKMapSDK_Base.svg?style=flat)](https://cocoapods.org/pods/LKMapSDK_Base)
 [![Platform](https://img.shields.io/cocoapods/p/LKMapSDK_Base.svg?style=flat)](https://cocoapods.org/pods/LKMapSDK_Base)
 
-## 中文
-## 实例
+## 示例
 
 克隆工程后，运行 `pod install` 
 
@@ -22,6 +21,8 @@ LKMapSDK_Base 支持 [CocoaPods](https://cocoapods.org) 安装。
 ```ruby
 pod 'LKMapSDK_Base'
 ```
+
+
 
 
 ## Example
