@@ -7,14 +7,16 @@
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+克隆工程后，运行 `pod install` 
 
 ## Requirements
 
+iOS 9.0及以上系统
+
 ## Installation
 
-LKMapSDK_Base is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+LKMapSDK_Base 支持 [CocoaPods](https://cocoapods.org) 安装。
+将以下命令添加到你的 Podfile 文件中：
 
 ```ruby
 pod 'LKMapSDK_Base'
