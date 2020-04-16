@@ -11,6 +11,5 @@
 
 /// 请求报文基类
 @interface LKRequest : NSObject
-@property (nonatomic, copy, readonly) NSString *timestamp;
-@property (nonatomic, copy, readonly) NSString *nonce;
+
 @end

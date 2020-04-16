@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LKMapSDK_Base'
-  s.version          = '1.0.0'
+  s.version          = '2.0.0'
   s.summary          = '箩筐地图iOS SDK（CocoaPods箩筐地图官方库），基础功能包'
 
 # This description is used to generate tags and improve search results.

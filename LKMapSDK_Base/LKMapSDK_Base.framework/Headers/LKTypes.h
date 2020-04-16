@@ -6,9 +6,6 @@
 //  Copyright © 2020 luokung. All rights reserved.
 //
 
-#ifndef LKTypes_h
-#define LKTypes_h
-
 #import <CoreLocation/CoreLocation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKitDefines.h>
@@ -81,11 +78,11 @@ typedef struct CG_BOXABLE LKCoordinateSpan {
 } LKCoordinateSpan;
 
 /**
- * 创建LKCoordinateSpan实例
+ * 创建LKCoordinateSpan
  *
  * @param latitudeDelta 纬度范围
  * @param longitudeDelta 经度范围
- * @return LKCoordinateSpan实例
+ * @return LKCoordinateSpan
  */
 NS_INLINE LKCoordinateSpan LKCoordinateSpanMake(CLLocationDegrees latitudeDelta, CLLocationDegrees longitudeDelta) {
     LKCoordinateSpan span;
@@ -108,7 +105,7 @@ NS_INLINE BOOL LKCoordinateSpanEqualToCoordinateSpan(LKCoordinateSpan span1, LKC
 /// 一个经纬度区域
 typedef struct {
     
-    /// 中心坐标
+    /// 中心点经纬度坐标
     CLLocationCoordinate2D center;
     
     /// 经纬度范围
@@ -117,10 +114,11 @@ typedef struct {
 } LKCoordinateRegion;
 
 /**
- * 创建LKCoordinateRegion实例
+ * 创建LKCoordinateRegion
+ *
  * @param centerCoordinate 中心点经纬度坐标
  * @param span 经纬度的范围
- * @return 根据指定参数生成的BMKCoordinateRegion对象
+ * @return 根据指定参数生成的BMKCoordinateRegion
  */
 NS_INLINE LKCoordinateRegion LKCoordinateRegionMake(CLLocationCoordinate2D centerCoordinate, LKCoordinateSpan span)
 {
@@ -130,45 +128,142 @@ NS_INLINE LKCoordinateRegion LKCoordinateRegionMake(CLLocationCoordinate2D cente
     return region;
 }
 
-/// 墨卡托投影坐标
+/// 地理坐标点，用直角地理坐标表示
 typedef struct CG_BOXABLE LKMapPoint {
     
-    /// 水平坐标
-    CGFloat x;
+    /// 横坐标
+    double x;
     
-    /// 竖直坐标
-    CGFloat y;
+    /// 纵坐标
+    double y;
 } LKMapPoint;
 
 /**
- * 创建墨卡托投影坐标
+ * 创建LKMapPoint
  *
  * @param x 水平坐标
  * @param y 竖直坐标
- * @return 墨卡托坐标
+ * @return LKMapPoint
  */
-NS_INLINE LKMapPoint LKMapPointMake(CGFloat x, CGFloat y) {
+NS_INLINE LKMapPoint LKMapPointMake(double x, double y) {
     LKMapPoint point;
     point.x = x;
     point.y = y;
     return point;
 }
 
-/**
- * 地理坐标（默认GCJ02）转换为墨卡托投影坐标
- *
- * @param coordinate 地理坐标
- * @return 墨卡托投影坐标
- */
-UIKIT_EXTERN LKMapPoint LKMapPointForCoordinate(CLLocationCoordinate2D coordinate);
+/// 矩形大小，用直角地理坐标表示
+typedef struct CG_BOXABLE LKMapSize {
+    
+    /// 宽度
+    double width;
+    
+    /// 高度
+    double height;
+} LKMapSize;
 
 /**
- * 墨卡托投影坐标转换为地理坐标（默认GCJ02）
+ * 创建LKMapSize
  *
- * @param mapPoint 墨卡托投影坐标
- * @return 地理坐标
+ * @param width 宽度
+ * @param height 高度
+ * @return LKMapSize
  */
-UIKIT_EXTERN CLLocationCoordinate2D LKCoordinateForMapPoint(LKMapPoint mapPoint);
+NS_INLINE LKMapSize LKMapSizeMake(double width, double height) {
+    LKMapSize size;
+    size.width = width;
+    size.height = height;
+    return size;
+}
+
+/// 矩形，用直角地理坐标表示
+typedef struct CG_BOXABLE LKMapRect {
+    
+    /// 屏幕左上点对应的直角地理坐标
+    LKMapPoint origin;
+    
+    /// 坐标范围
+    LKMapSize size;
+} LKMapRect;
+
+/**
+ * 创建LKMapRect
+ *
+ * @param x 水平坐标
+ * @param y 竖直坐标
+ * @param width 宽度
+ * @param height 高度
+ * @return LKMapRect
+ */
+NS_INLINE LKMapRect LKMapRectMake(double x, double y, double width, double height) {
+    LKMapPoint point = LKMapPointMake(x, y);
+    LKMapSize size = LKMapSizeMake(width, height);
+    return (LKMapRect){point, size};
+}
+
+/**
+ * 判断指定矩形是否为NULL
+ *
+ * @param rect LKMapRect 矩形
+ * @return 如果矩形为NULL，返回YES，否则返回NO
+ */
+NS_INLINE BOOL LKMapRectIsNull(LKMapRect rect) {
+    return isinf(rect.origin.x) || isinf(rect.origin.y);
+}
+
+/**
+ * 获取指定矩形的x轴坐标最小值
+ * @param rect 指定的矩形
+ * @return x轴坐标最小值
+ */
+NS_INLINE double LKMapRectGetMinX(LKMapRect rect) {
+    return rect.origin.x;
+}
+
+/**
+ * 获取指定矩形的y轴坐标最小值
+ * @param rect 指定的矩形
+ * @return y轴坐标最小值
+ */
+NS_INLINE double LKMapRectGetMinY(LKMapRect rect) {
+    return rect.origin.y;
+}
+
+/**
+ * 获取指定矩形在x轴中点的坐标值
+ * @param rect 指定的矩形
+ * @return x轴中点的坐标值
+ */
+NS_INLINE double LKMapRectGetMidX(LKMapRect rect) {
+    return rect.origin.x + rect.size.width / 2.0;
+}
+
+/**
+ * 获取指定矩形在y轴中点的坐标值
+ * @param rect 指定的矩形
+ * @return y轴中点的坐标值
+ */
+NS_INLINE double LKMapRectGetMidY(LKMapRect rect) {
+    return rect.origin.y + rect.size.height / 2.0;
+}
+
+/**
+ * 获取指定矩形的x轴坐标最大值
+ * @param rect 指定的矩形
+ * @return x轴坐标最大值
+ */
+NS_INLINE double LKMapRectGetMaxX(LKMapRect rect) {
+    return rect.origin.x + rect.size.width;
+}
+
+/**
+ * 获取指定矩形的y轴坐标最大值
+ * @param rect 指定的矩形
+ * @return y轴坐标最大值
+ */
+NS_INLINE double LKMapRectGetMaxY(LKMapRect rect) {
+    return rect.origin.y + rect.size.height;
+}
 
 /// 经纬度矩形区域
 typedef struct CG_BOXABLE LKCoordinateBounds {
@@ -367,4 +462,17 @@ NS_INLINE CGFloat LKRadiansFromDegrees(CLLocationDegrees degrees) {
 NS_INLINE CLLocationDegrees LKDegreesFromRadians(CGFloat radians) {
     return radians * 180 / M_PI;
 }
-#endif /* LKTypes_h */
+
+/// 经过投影后的世界范围大小，纬度范围[-85，85]，经度范围[-180, 180]
+UIKIT_EXTERN const LKMapSize LKMapSizeWorld;
+
+/// 经过投影后的世界矩形范围
+UIKIT_EXTERN const LKMapRect LKMapRectWorld;
+
+/// 空的直角坐标矩形
+UIKIT_EXTERN const LKMapRect LKMapRectNull;
+
+@interface LKTypes : NSObject
+
+@end
+
