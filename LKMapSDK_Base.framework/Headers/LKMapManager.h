@@ -2,7 +2,7 @@
 //  LKMapManager.h
 //  LKMapSDK_Base
 //
-//  Created by Hao Fengpei on 2019/11/19.
+//  Created by RD on 2019/11/19.
 //  Copyright © 2019 luokung. All rights reserved.
 //
 
@@ -27,6 +27,9 @@ typedef void(^LKMapManagerStartResultBlock)(LKNetworkCode code);
 
 /// 获取当前SDK的版本号
 @property (nonatomic, copy, readonly) NSString *sdkVersion;
+
+/// 是否启用崩溃日志上传。默认为YES，只有在真机上设置有效。开启崩溃日志上传有助于我们更好的了解SDK的状况，可以帮助我们持续优化和改进SDK。需要注意的是，SDK内部是通过设置NSUncaughtExceptionHandler来捕获异常的，如果您的APP中使用了其他收集崩溃日志的SDK，或者自己有设置NSUncaughtExceptionHandler的话，请保证 LKMapManager 的初始化是在其他设置NSUncaughtExceptionHandler操作之后进行的，我们的handler会在处理完异常后调用前一次设置的handler，保证之前设置的handler会被执行。
+@property (nonatomic, assign) BOOL crashReportEnabled;
 
 /// 箩筐地图开放平台申请的AK
 @property (nonatomic, copy, readonly) NSString *accessKey;

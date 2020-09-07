@@ -8,26 +8,22 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LKMapSDK_Base'
-  s.version          = '2.0.0'
+  s.version          = '2.5.0'
   s.summary          = '箩筐地图iOS SDK（CocoaPods箩筐地图官方库），基础功能包'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
 箩筐地图iOS SDK（CocoaPods箩筐地图官方库），基础功能包。提供基础功能。
                        DESC
 
   s.homepage         = 'https://lbs.luokuang.com'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.license          = { :type => 'Copyright', :text => 'Copyright © 2020 LuoKuang. All Rights Reserved.' }
   s.author           = { 'LuokuangLBS' => 'haofp@luokung.com' }
-  s.source           = { :git => 'https://github.com/LuokuangLBS/LKMapSDK_Base.git', :tag => s.version.to_s }
+  s.source           = { "http": "https://lkbj.cn-bj.ufileos.com/lbs/static/zip/LKMapSDK_Base_2.5.0.zip" }
+  s.source_files = 'LKMapSDK_Base.framework/**/*.{h}'
   s.ios.deployment_target = '9.0'
   s.requires_arc = true
   s.frameworks = 'UIKit', 'CoreLocation'
-  s.vendored_frameworks = 'LKMapSDK_Base/*.{framework}'
+  s.public_header_files = 'LKMapSDK_Base.framework/Headers/*.h'
+  s.vendored_frameworks = 'LKMapSDK_Base.framework'
   s.libraries = 'c++'
 end

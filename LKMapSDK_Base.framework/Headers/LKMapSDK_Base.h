@@ -2,7 +2,7 @@
 //  LKMapSDK_Base.h
 //  LKMapSDK_Base
 //
-//  Created by hao on 2019/12/5.
+//  Created by RD on 2019/12/5.
 //  Copyright © 2019 luokung. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  LKTypes.h
 //  LKMapSDK_Base
 //
-//  Created by hao on 2020/3/4.
+//  Created by RD on 2020/3/4.
 //  Copyright © 2020 luokung. All rights reserved.
 //
 
@@ -10,39 +10,80 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKitDefines.h>
 
+#pragma once
+
+#if TARGET_OS_IPHONE
+@class UIImage;
+#define LKImage UIImage
+#else
+@class NSImage;
+#define LKImage NSImage
+#endif
+
+#if TARGET_OS_IPHONE
+@class UIColor;
+#define LKColor UIColor
+#else
+@class NSColor;
+#define LKColor NSColor
+#endif
+
+#define LK_EXPORT __attribute__((visibility ("default")))
+
 
 /// 网络响应状态码
 typedef NS_ENUM(NSInteger, LKNetworkCode) {
     
+    /// 未知错误
+    LKNetworkCodeUnknownError = -1,
+    
     /// 成功
-    LKNetworkCodeSuccess,
+    LKNetworkCodeSuccess = 0,
+    
+    /// 服务器内部错误。建议首先检查请求参数是否正确，如果还是无法解决，请提交工单给我们，并填写详细错误信息。
+    LKNetworkCodeServerInternalError = 1,
+    
+    /// 请求参数错误。请检查请求参数是否正确，比如：参数类型、必填参数是否为空。
+    LKNetworkCodeParameterError = 2,
+    
+    /// 请求错误。比如：请求方式错误、请求地址错误。
+    LKNetworkCodeRequestError = 3,
     
     /// 请求结果为空
-    LKNetworkCodeResultNotFound,
+    LKNetworkCodeResultNotFound = 4,
+    
+    /// 网络错误。比如：网络连接失败
+    LKNetworkCodeNetworkError = 5,
     
     /// SDK内部处理错误
-    LKNetworkCodeSDKInnerError,
+    LKNetworkCodeSDKInnerError = 6,
     
-    /// 网络错误
-    LKNetworkCodeNetworkError,
+    /// mcode 不存在，SDK mcode 参数必需，该错误码代表服务器没有解析到 mcode
+    LKNetworkCodeMCodeNotFound = 7,
     
-    /// 服务器内部错误
-    LKNetworkCodeServerInternalError,
+    /// AK 为空。请检查 `- startWithAccessKey:callback:` 是否设置了 AK。
+    LKNetworkCodeAKNotFound = 121,
     
-    /// 参数错误
-    LKNetworkCodeParameterError,
+    /// AK 错误。请前往箩筐地图开放平台（https://lbs.luokuang.com），检查 AK 是否正确。
+    LKNetworkCodeAKNotCorrect = 122,
     
-    /// 请求错误
-    LKNetworkCodeRequestError,
+    /// AK 不可用。请前往箩筐地图开放平台（https://lbs.luokuang.com ），检查 AK 是否已经被删除。或者被开放平台封禁，客服邮箱：lbs.kefu@luokung.com
+    LKNetworkCodeAKUnavailable = 123,
     
-    /// mcode不存在，SDK mcode参数必需，该错误码代表服务器没有解析到mcode
-    LKNetworkCodeMCodeNotFound,
+    /// AK 的类型错误，比如，使用的是 Andriod 或 Web 类型的 AK。请前往箩筐地图开放平台（https://lbs.luokuang.com ），检查 AK 的类型是否正确。
+    LKNetworkCodeAKTypeError = 124,
     
-    /// APP的AK类型错误
-    LKNetworkCodeAKTypeError,
+    /// 服务被禁用。您在箩筐地图开放平台中创建或设置某 APP 的时候禁用了某项服务，若需要开通权限，可以进入控制台为 AK 勾选对应服务。箩筐地图开放平台（https://lbs.luokuang.com)
+    LKNetworkCodeServiceForbidden = 141,
     
-    /// 服务被禁用，用户在API控制台中创建或设置某APP的时候禁用了某项服务，若需要开通权限，可以进入API控制台为AK勾选对应服务
-    LKNetworkCodeServiceForbidden,
+    /// 访问已超出日访问量。请前往箩筐地图开放平台（https://lbs.luokuang.com ），提升配额。
+    LKNetworkCodeDailyPVLimited = 142,
+    
+    /// 某个 AK 使用某个服务接口 QPS 超出限制。请前往箩筐地图开放平台（https://lbs.luokuang.com ），提升配额。
+    LKNetworkCodeQPSLimited = 143,
+    
+    /// 自定义地图样式不存在或被删除。请前往箩筐地图开放平台（https://lbs.luokuang.com ），重新创建自定义地图样式。
+    LKNetworkCodeCustomMapStyleNotFound = 1001,
 };
 
 
@@ -118,7 +159,7 @@ typedef struct {
  *
  * @param centerCoordinate 中心点经纬度坐标
  * @param span 经纬度的范围
- * @return 根据指定参数生成的BMKCoordinateRegion
+ * @return 根据指定参数生成的LKCoordinateRegion
  */
 NS_INLINE LKCoordinateRegion LKCoordinateRegionMake(CLLocationCoordinate2D centerCoordinate, LKCoordinateSpan span)
 {
@@ -471,6 +512,34 @@ UIKIT_EXTERN const LKMapRect LKMapRectWorld;
 
 /// 空的直角坐标矩形
 UIKIT_EXTERN const LKMapRect LKMapRectNull;
+
+/// 过渡
+typedef struct __attribute__((objc_boxable)) LKTransition {
+    
+    /// 时长。单位：秒
+    NSTimeInterval duration;
+    
+    /// 延迟时长。单位：秒
+    NSTimeInterval delay;
+} LKTransition;
+
+/**
+ * 创建过渡
+ *
+ * @param duration 时长
+ * @param delay 延迟时长
+ * @return 过渡
+ */
+NS_INLINE LKTransition LKTransitionMake(NSTimeInterval duration, NSTimeInterval delay) {
+    LKTransition transition;
+    transition.duration = duration;
+    transition.delay = delay;
+    
+    return transition;
+}
+
+/// 异常类型
+typedef NSString *LKExceptionName NS_TYPED_EXTENSIBLE_ENUM;
 
 @interface LKTypes : NSObject
 
