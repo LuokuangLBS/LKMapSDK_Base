@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://lbs.luokuang.com'
   s.license          = { :type => 'Copyright', :text => 'Copyright © 2020 LuoKuang. All Rights Reserved.' }
   s.author           = { 'LuokuangLBS' => 'haofp@luokung.com' }
-  s.source           = { "http": "https://lkbj.cn-bj.ufileos.com/lbs/static/zip/LKMapSDK_Base_2.5.0.zip" }
+  s.source           = { :git => 'https://github.com/LuokuangLBS/LKMapSDK_Base.git', :tag => s.version.to_s }
   s.source_files = 'LKMapSDK_Base.framework/**/*.{h}'
   s.ios.deployment_target = '9.0'
   s.requires_arc = true
